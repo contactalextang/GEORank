@@ -1,12 +1,12 @@
 /**
  * Tutorial Page - GEO 教程交互
  */
-(window.GEOrank?.PageLifecycle?.run?.bind(window.GEOrank.PageLifecycle)
+(window.GEO工作台?.PageLifecycle?.run?.bind(window.GEO工作台.PageLifecycle)
     || ((callback) => callback()))(() => {
     'use strict';
 
     const API_BASE = '';
-    const Routes = window.GEOrank?.Routes;
+    const Routes = window.GEO工作台?.Routes;
     const TUTORIAL_CHAPTER_ORDER = [
         'GEO认知',
         'AI原理',
@@ -150,7 +150,7 @@
     }
 
     function applySiteBrand(text) {
-        return window.GEOrank?.SiteSettings?.replaceBrand?.(text) || text;
+        return window.GEO工作台?.SiteSettings?.replaceBrand?.(text) || text;
     }
 
     function setDocumentMeta(title, description) {
@@ -295,7 +295,7 @@
         if (elements.secondaryTitle) {
             elements.secondaryTitle.textContent = '栏目索引';
         }
-        setDocumentMeta('GEO 教程中心 - GEOrank', 'GEO 生成式引擎优化教程中心 — 科普教程、最佳实践与技术文档。');
+        setDocumentMeta('GEO 教程中心 - GEO工作台', 'GEO 生成式引擎优化教程中心 — 科普教程、最佳实践与技术文档。');
         updateReadingProgress();
     }
 
@@ -491,7 +491,7 @@
         }
         const articleText = normalizeText(elements.article?.textContent || '');
         setDocumentMeta(
-            `${detail.title || 'GEO 教程中心'} - GEOrank`,
+            `${detail.title || 'GEO 教程中心'} - GEO工作台`,
             articleText.slice(0, 120) || 'GEO 生成式引擎优化知识库'
         );
         updateReadingProgress();
@@ -604,7 +604,7 @@
 
         renderChannelToc();
         initSmoothScroll();
-        setDocumentMeta('GEO 教程中心 - GEOrank', 'GEO 生成式引擎优化教程中心 — 科普教程、最佳实践与技术文档。');
+        setDocumentMeta('GEO 教程中心 - GEO工作台', 'GEO 生成式引擎优化教程中心 — 科普教程、最佳实践与技术文档。');
         updateReadingProgress();
     }
 

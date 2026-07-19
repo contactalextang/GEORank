@@ -1130,9 +1130,7 @@
     }
 
     async function startDiagnosis() {
-        if (Auth && !Auth.requireAuth({ reasonKey: 'auth.reasonDiagnostic' })) {
-            return;
-        }
+        // 免登录测试：诊断无需登录即可发起（登录仅用于保存报告）。
 
         const rawUrl = urlInput?.value?.trim();
         if (!rawUrl) {

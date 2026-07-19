@@ -1,8 +1,8 @@
 /**
- * GEOrank - GEO 小工具频道
+ * GEO工作台 - GEO 小工具频道
  * 用极简输入生成 JSON-LD、llms.txt、标题、知识库和 AI 友好度评分。
  */
-(window.GEOrank?.PageLifecycle?.run?.bind(window.GEOrank.PageLifecycle)
+(window.GEO工作台?.PageLifecycle?.run?.bind(window.GEO工作台.PageLifecycle)
     || ((callback) => callback()))(() => {
     'use strict';
 
@@ -23,7 +23,7 @@
     };
 
     function apiBase() {
-        return window.GEOrank?.Auth?.apiBase
+        return window.GEO工作台?.Auth?.apiBase
             || '';
     }
 
@@ -70,7 +70,7 @@
 
     function renderDirectPolicyStatus(policy) {
         if (policy?.byok_transport_mode === 'browser_direct' && policy?.allow_user_byok !== false) {
-            updateDirectStatus('浏览器直连模式已启用：简单工具会优先使用当前浏览器保存的 API Key，Key 不会发送到 GEOrank 后端。', 'active');
+            updateDirectStatus('浏览器直连模式已启用：简单工具会优先使用当前浏览器保存的 API Key，Key 不会发送到 GEO工作台 后端。', 'active');
             return;
         }
         updateDirectStatus('当前使用本地规则生成；后台启用浏览器直连后，简单工具可直接调用用户本地 API Key。');
@@ -128,7 +128,7 @@
     }
 
     function buildDirectMessages(toolKey, inputText) {
-        const common = '你是 GEOrank 的 GEO 小工具生成助手。根据用户输入生成可直接使用的结果，不要解释你的过程，不要输出寒暄。';
+        const common = '你是 GEO工作台 的 GEO 小工具生成助手。根据用户输入生成可直接使用的结果，不要解释你的过程，不要输出寒暄。';
         const instructions = {
             jsonld: '只返回合法 JSON，不要包含 Markdown 代码块。输出 Schema.org JSON-LD，优先包含 Organization 和 WebSite；字段缺失时根据输入合理补齐，但不要编造具体客户、价格或证书。',
             llms: '返回一份 llms.txt 草稿，使用 Markdown/txt 风格，包含站点摘要、重要页面、AI Reading Notes 和限制说明。',
@@ -178,7 +178,7 @@
         const policy = await loadUsagePolicy();
         if (policy?.byok_transport_mode !== 'browser_direct' || policy?.allow_user_byok === false) return null;
 
-        const store = window.GEOrank?.APIKeyStore;
+        const store = window.GEO工作台?.APIKeyStore;
         const config = store?.read?.();
         if (!config?.enabled || !config.apiKey || !config.baseUrl || !config.model) {
             store?.openModal?.('当前工具频道启用了浏览器直连模式，请先在当前浏览器保存 API Key。');
@@ -210,7 +210,7 @@
     }
 
     async function reportBrowserDirectUsage(toolKey, config, inputText, outputText, statusValue = 'success', errorCode = null) {
-        const token = window.GEOrank?.Auth?.getToken?.();
+        const token = window.GEO工作台?.Auth?.getToken?.();
         const headers = { 'Content-Type': 'application/json' };
         if (token) headers.Authorization = `Bearer ${token}`;
         await fetch(`${apiBase()}/api/usage/browser-direct`, {

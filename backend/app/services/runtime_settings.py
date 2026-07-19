@@ -223,15 +223,15 @@ DEFAULT_FRONTEND_MODULES = {
     ],
 }
 DEFAULT_HOMEPAGE_RUNTIME = {
-    "mode": "custom",
-    "active_release_id": "9fe4a087-42bc-423a-bc59-fc020018a6f9",
+    "mode": "default",
+    "active_release_id": None,
     "fallback_enabled": True,
     "company_list_path": "/companies",
     "updated_at": None,
     "updated_by": None,
 }
 DEFAULT_HOMEPAGE_RELEASE_ID = DEFAULT_HOMEPAGE_RUNTIME["active_release_id"]
-DEFAULT_HOMEPAGE_RELEASE_TITLE = "GEORankHub 导航与版权更新"
+DEFAULT_HOMEPAGE_RELEASE_TITLE = "默认首页"
 VALID_AI_ACCESS_MODES = {
     "platform_unlimited",
     "daily_quota",

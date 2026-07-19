@@ -63,7 +63,7 @@
     // ===== 公开站点设置 =====
     const SiteSettings = {
         defaults: {
-            site_name: 'GEOrank',
+            site_name: 'GEO工作台',
             site_description: 'GEO 智搜优化引擎',
             analytics_tracking_code: '',
             navigation_menu: {
@@ -76,7 +76,6 @@
                     { id: 'tools', label: '工具', url: '/tools', target: '_blank', enabled: true },
                     { id: 'experts', label: '专家', url: '/experts', target: '_blank', enabled: true },
                     { id: 'tutorial', label: '教程', url: '/tutorial', target: '_blank', enabled: true },
-                    { id: 'github', label: 'GitHub', url: 'https://github.com/yaojingang/GEORank', target: '_blank', enabled: true },
                 ],
             },
         },
@@ -383,8 +382,8 @@
                 'auth.toastSignedIn': '{phone} 已登录',
                 'auth.standaloneLoginEyebrow': 'ACCOUNT ACCESS',
                 'auth.standaloneRegisterEyebrow': 'CREATE ACCOUNT',
-                'auth.standaloneLoginTitle': '登录 GEOrank',
-                'auth.standaloneRegisterTitle': '注册并开始使用 GEOrank',
+                'auth.standaloneLoginTitle': '登录 GEO工作台',
+                'auth.standaloneRegisterTitle': '注册并开始使用 GEO工作台',
                 'auth.standaloneLoginCopy': '使用手机号和密码即可完成登录，会话会长期保留在当前浏览器中。',
                 'auth.standaloneRegisterCopy': '使用手机号和密码即可完成注册，会话会长期保留在当前浏览器中。',
                 'auth.standaloneHint': '每个浏览器默认绑定一个手机号，用于稳定保存登录状态。',
@@ -535,8 +534,8 @@
                 'auth.toastSignedIn': '{phone} signed in',
                 'auth.standaloneLoginEyebrow': 'ACCOUNT ACCESS',
                 'auth.standaloneRegisterEyebrow': 'CREATE ACCOUNT',
-                'auth.standaloneLoginTitle': 'Log in to GEOrank',
-                'auth.standaloneRegisterTitle': 'Create your GEOrank account',
+                'auth.standaloneLoginTitle': 'Log in to GEO工作台',
+                'auth.standaloneRegisterTitle': 'Create your GEO工作台 account',
                 'auth.standaloneLoginCopy': 'Use your phone number and password to log in. Your session stays on this browser.',
                 'auth.standaloneRegisterCopy': 'Use your phone number and password to register. Your session stays on this browser.',
                 'auth.standaloneHint': 'Each browser is bound to one phone number to keep the login state stable.',
@@ -691,7 +690,7 @@
     <div class="flex justify-between items-center px-6 md:px-8 h-16 w-full max-w-7xl mx-auto">
         <div class="flex items-center gap-8">
             <a href="/" data-logo-link class="text-xl font-bold tracking-tighter text-blue-700 dark:text-blue-500 font-headline hover:opacity-90 transition-opacity">
-                GEOrank
+                GEO工作台
             </a>
             <div class="hidden md:flex items-center gap-5" data-site-navigation data-navigation-variant="desktop">
                 <a href="/companies" data-nav-link data-i18n="nav.companies" class="font-manrope font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">公司</a>
@@ -702,7 +701,6 @@
                 <a href="/tools" data-nav-link data-i18n="nav.tools" class="font-manrope font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">工具</a>
                 <a href="/experts" data-nav-link data-i18n="nav.experts" class="font-manrope font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">专家</a>
                 <a href="/tutorial" data-nav-link data-i18n="nav.tutorial" class="font-manrope font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">教程</a>
-                <a href="https://github.com/yaojingang/GEORank" target="_blank" rel="noopener noreferrer" data-nav-link data-navigation-item="github" class="font-manrope font-medium tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors">GitHub</a>
             </div>
         </div>
         <div class="header-actions flex items-center gap-2 md:gap-3">
@@ -732,7 +730,6 @@
             <a href="/tools" data-nav-link data-i18n="nav.tools" class="font-manrope font-medium py-2 text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">工具</a>
             <a href="/experts" data-nav-link data-i18n="nav.experts" class="font-manrope font-medium py-2 text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">专家</a>
             <a href="/tutorial" data-nav-link data-i18n="nav.tutorial" class="font-manrope font-medium py-2 text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">教程</a>
-            <a href="https://github.com/yaojingang/GEORank" target="_blank" rel="noopener noreferrer" data-nav-link data-navigation-item="github" class="font-manrope font-medium py-2 text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors">GitHub</a>
         </div>
     </div>
 </nav>`;
@@ -740,7 +737,7 @@
 const FOOTER_HTML = `
 <footer class="w-full mt-auto border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-950">
     <div class="max-w-7xl mx-auto px-6 md:px-8 py-6">
-        <p class="font-inter text-sm text-slate-400 dark:text-slate-500 text-center" data-footer-rights>© 2026 GEORankHub · 公益性 GEO 研究平台 · 独立第三方 · <strong><a href="https://github.com/yaojingang/GEORank" target="_blank" rel="noopener noreferrer">GitHub</a>开源</strong></p>
+        <p class="font-inter text-sm text-slate-400 dark:text-slate-500 text-center" data-footer-rights>© 2026 GEO工作台</p>
     </div>
 </footer>`;
 
@@ -1311,7 +1308,7 @@ const FOOTER_HTML = `
 
         renderUnavailable(key) {
             const module = this.getModule(key);
-            const siteName = window.GEOrank?.SiteSettings?.settings?.site_name || 'GEOrank';
+            const siteName = window.GEOrank?.SiteSettings?.settings?.site_name || 'GEO工作台';
             document.title = `${module?.name || '模块'}暂未开放 - ${siteName}`;
             const main = document.querySelector('main') || document.createElement('main');
             main.className = 'frontend-module-unavailable';
@@ -1892,42 +1889,7 @@ const FOOTER_HTML = `
         },
 
         maybePromptFirstVisit() {
-            const path = Routes.normalizePath(window.location.pathname);
-            if (this.isAuthenticated()) return;
-            if (path.startsWith('/admin') || path === '/login' || path === '/register') return;
-            if (path === '/profile') return;
-            const moduleKey = ModuleGate.moduleKeyForPath(path);
-            if (moduleKey && !ModuleGate.isEnabled(moduleKey)) return;
-            if (
-                path === '/company'
-                || path === '/companies'
-                || path.startsWith('/companies/')
-                || path === '/c'
-                || path.startsWith('/c/')
-            ) return;
-            if (path === '/experts' || path.startsWith('/experts/')) return;
-            let submitAutoOpenFlag = false;
-            try {
-                submitAutoOpenFlag = sessionStorage.getItem('georank_open_submit_company') === '1';
-            } catch (_) {
-                submitAutoOpenFlag = false;
-            }
-            const submitRouteRequested = new URLSearchParams(window.location.search).get('submit') === 'company'
-                || window.location.hash === '#submit-company'
-                || submitAutoOpenFlag;
-            if (submitRouteRequested) {
-                try {
-                    sessionStorage.removeItem('georank_open_submit_company');
-                } catch (_) {
-                    // Storage can be unavailable in restricted browsing modes.
-                }
-                return;
-            }
-            if (localStorage.getItem(this.PROMPTED_KEY)) return;
-            localStorage.setItem(this.PROMPTED_KEY, '1');
-            this.openModal('register', {
-                reason: I18N.t('auth.firstVisitReason'),
-            });
+            // 免登录测试：不再在首访强制弹出注册/登录框，登录改为完全可选。
         },
 
         authLinkWithReturn(path) {

@@ -43,10 +43,6 @@ test('the static frontend reserves the root path for the homepage', async () => 
   assert.match(nginx, /location = \/index\.html \{\s*return 301 \/companies\$is_args\$args;/);
   assert.match(nginx, /location = \/company \{[\s\S]*?if \(\$arg_id != ""\)[\s\S]*?return 301 \/companies\/\$arg_id;[\s\S]*?return 301 \/companies;/);
   assert.match(runtime, /normalizedPath === '\/company'[\s\S]*?Routes\.buildCompanyDetail\(params\.get\('id'\)\)[\s\S]*?Routes\.buildUrl\('\/companies'\)/);
-  assert.match(
-    runtime,
-    /maybePromptFirstVisit\(\)[\s\S]*?path === '\/company'[\s\S]*?path === '\/companies'[\s\S]*?path\.startsWith\('\/c\/'\)[\s\S]*?return;/
-  );
   assert.match(companyPage, /<a href="\/">首页<\/a><span>\/<\/span><a href="\/companies">公司<\/a>/);
   assert.match(companyPage, /"position": 2, "name": "公司", "item": _absolute_url\(request, "\/companies"\)/);
   assert.match(companySubmit, /<a href="\/companies"[^>]*>\s*返回公司首页\s*<\/a>/);

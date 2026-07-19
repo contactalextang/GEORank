@@ -1579,7 +1579,7 @@ def _render_meta_tags(
         f'<meta name="robots" content="{escape(robots)}">',
         f'<meta name="keywords" content="{escape(", ".join(keywords))}">',
         f'<link rel="canonical" href="{escape(canonical_url)}">',
-        '<meta property="og:site_name" content="GEOrank">',
+        '<meta property="og:site_name" content="GEO工作台">',
         '<meta property="og:type" content="website">',
         f'<meta property="og:title" content="{escape(title)}">',
         f'<meta property="og:description" content="{escape(description)}">',

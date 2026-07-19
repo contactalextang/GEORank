@@ -1,13 +1,13 @@
 /**
  * Plans Page - GEO 方案生成器
  */
-(window.GEOrank?.PageLifecycle?.run?.bind(window.GEOrank.PageLifecycle)
+(window.GEO工作台?.PageLifecycle?.run?.bind(window.GEO工作台.PageLifecycle)
     || ((callback) => callback()))(() => {
     'use strict';
 
     const API_BASE = '';
-    const Routes = window.GEOrank?.Routes;
-    const Auth = window.GEOrank?.Auth;
+    const Routes = window.GEO工作台?.Routes;
+    const Auth = window.GEO工作台?.Auth;
     const initialRouteState = Routes?.readPlanState
         ? Routes.readPlanState()
         : (() => {
@@ -196,8 +196,8 @@
             console.error('[plans] generate failed', error);
             stopLoadingPreview();
             setStatus(error.message || '生成方案失败，请稍后重试。', 'error');
-            if (window.GEOrank?.APIKeyStore?.shouldPromptForError?.(error)) {
-                window.GEOrank.APIKeyStore.openModal(error.message);
+            if (window.GEO工作台?.APIKeyStore?.shouldPromptForError?.(error)) {
+                window.GEO工作台.APIKeyStore.openModal(error.message);
             }
             elements.resultPanel?.classList.remove('is-loading');
             elements.resultActions?.classList.add('hidden');
@@ -220,7 +220,7 @@
         if (token) {
             headers.Authorization = `Bearer ${token}`;
         }
-        Object.assign(headers, window.GEOrank?.APIKeyStore?.getHeaders?.() || {});
+        Object.assign(headers, window.GEO工作台?.APIKeyStore?.getHeaders?.() || {});
 
         const response = await fetch(`${API_BASE}${path}`, {
             ...options,
@@ -549,7 +549,7 @@ ${state.companyId ? `已关联公司 ID：${state.companyId}` : ''}`;
     </style>
 </head>
 <body>
-    <p style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#2563eb;font-weight:800;">GEOrank GEO Plan</p>
+    <p style="font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#2563eb;font-weight:800;">GEO工作台 GEO Plan</p>
     ${renderMarkdown(state.lastReply)}
 </body>
 </html>`;

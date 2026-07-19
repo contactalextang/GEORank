@@ -27,7 +27,6 @@ from app.services.homepage_assets import (  # noqa: E402
     reset_active_homepage,
     update_homepage_entry_source,
 )
-from app.services.runtime_settings import DEFAULT_HOMEPAGE_RELEASE_ID  # noqa: E402
 from app.services import homepage_assets  # noqa: E402
 
 
@@ -673,76 +672,6 @@ class HomepageAssetTests(unittest.TestCase):
         self.assertEqual(active_path.readlink(), original_target)
         self.assertNotIn("never()", (active_path / "index.html").read_text())
         self.assertEqual(self._release_snapshot("release-atomic"), release_snapshot)
-
-    def test_builtin_homepage_manifest_matches_public_release_files(self):
-        repo_root = Path(__file__).resolve().parents[2]
-        release_id = DEFAULT_HOMEPAGE_RELEASE_ID
-        manifest_path = repo_root / "runtime" / "homepages" / "releases" / release_id / "manifest.json"
-        public_dir = repo_root / "runtime" / "homepages" / "public" / "releases" / release_id
-        source_dir = repo_root / "runtime" / "homepages" / "releases" / release_id / "source"
-        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-
-        expected_files = []
-        for path in sorted(public_dir.rglob("*")):
-            if path.is_file():
-                payload = path.read_bytes()
-                expected_files.append(
-                    {
-                        "path": path.relative_to(public_dir).as_posix(),
-                        "size": len(payload),
-                        "sha256": hashlib.sha256(payload).hexdigest(),
-                    }
-                )
-
-        self.assertEqual(manifest["files"], expected_files)
-        self.assertEqual(manifest["file_count"], len(expected_files))
-        self.assertEqual(
-            manifest["extracted_size"],
-            sum(path.stat().st_size for path in source_dir.rglob("*") if path.is_file()),
-        )
-        self.assertEqual(manifest["storage_path"], f"/app/runtime/homepages/releases/{release_id}")
-        self.assertEqual(manifest["public_path"], f"/app/runtime/homepages/public/releases/{release_id}")
-        self.assertFalse(
-            (repo_root / "runtime" / "homepages" / "releases" / "f7e16e7c-e1aa-4e39-951b-4c274dd05175").exists()
-        )
-
-    def test_builtin_homepage_source_rebuilds_the_published_release(self):
-        repo_root = Path(__file__).resolve().parents[2]
-        release_id = DEFAULT_HOMEPAGE_RELEASE_ID
-        release_root = repo_root / "runtime" / "homepages"
-        source_root = release_root / "releases" / release_id / "source"
-        public_root = release_root / "public" / "releases" / release_id
-        manifest = json.loads(
-            (release_root / "releases" / release_id / "manifest.json").read_text(encoding="utf-8")
-        )
-
-        source_files = sorted(path for path in source_root.rglob("*") if path.is_file())
-        public_files = sorted(path for path in public_root.rglob("*") if path.is_file())
-        self.assertEqual(
-            [path.relative_to(source_root).as_posix() for path in source_files],
-            [path.relative_to(public_root).as_posix() for path in public_files],
-        )
-
-        for source_path in source_files:
-            relative_path = source_path.relative_to(source_root)
-            public_payload = (public_root / relative_path).read_bytes()
-            expected_payload = _render_public_homepage_file(
-                relative_path.as_posix(),
-                source_path.read_bytes(),
-            )
-            self.assertEqual(public_payload, expected_payload, relative_path.as_posix())
-
-        manifest_by_path = {item["path"]: item for item in manifest["files"]}
-        for public_path in public_files:
-            relative_path = public_path.relative_to(public_root).as_posix()
-            payload = public_path.read_bytes()
-            self.assertEqual(manifest_by_path[relative_path]["size"], len(payload))
-            self.assertEqual(
-                manifest_by_path[relative_path]["sha256"],
-                hashlib.sha256(payload).hexdigest(),
-            )
-
-        self.assertIn("/tutorial", source_root.joinpath("index.html").read_text(encoding="utf-8"))
 
     def test_reads_original_homepage_html_for_editing(self):
         original = '<html><body onload="boot()"><h1>Original</h1><script>boot()</script></body></html>'

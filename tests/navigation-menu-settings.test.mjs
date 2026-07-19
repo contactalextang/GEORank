@@ -47,15 +47,10 @@ test('shared static pages render configured labels, URLs, and opening targets sa
   assert.equal((header.match(/data-site-navigation/g) || []).length, 2);
 });
 
-test('custom homepage loads the trusted navigation runtime', async () => {
-  const [runtime, activeHomepage] = await Promise.all([
-    read('dist/js/site-navigation.js'),
-    read('runtime/homepages/public/releases/9fe4a087-42bc-423a-bc59-fc020018a6f9/index.html')
-  ]);
+test('shared navigation runtime binds trusted settings and link rendering', async () => {
+  const runtime = await read('dist/js/site-navigation.js');
 
   assert.match(runtime, /api\/settings\/public/);
   assert.match(runtime, /document\.createElement\('a'\)/);
   assert.match(runtime, /link\.textContent\s*=\s*item\.label/);
-  assert.match(activeHomepage, /data-georank-navigation-runtime/);
-  assert.match(activeHomepage, /src="\/js\/site-navigation\.js"/);
 });

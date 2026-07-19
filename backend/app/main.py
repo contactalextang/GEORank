@@ -47,7 +47,7 @@ async def _seed_settings(db):
     from app.services.navigation_settings import get_default_navigation_menu
 
     defaults = [
-        {"key": "site_name", "value": "GEOrank", "category": "basic", "is_public": True},
+        {"key": "site_name", "value": "GEO工作台", "category": "basic", "is_public": True},
         {"key": "site_description", "value": "追踪生成式人工智能搜索引擎优化领域的顶尖创新者与技术先锋。", "category": "basic", "is_public": True},
         {"key": "default_language", "value": "zh-CN", "category": "basic", "is_public": True},
         {"key": "timezone", "value": "Asia/Shanghai", "category": "basic", "is_public": False},
@@ -101,6 +101,13 @@ async def _seed_default_homepage_release(db):
         reset_active_homepage,
     )
     from app.services.runtime_settings import DEFAULT_HOMEPAGE_RELEASE_ID, DEFAULT_HOMEPAGE_RELEASE_TITLE
+
+    # 无内置首页 release（默认首页直接回退公司目录）时，跳过 seed 并清空运行时首页指针。
+    if not DEFAULT_HOMEPAGE_RELEASE_ID:
+        from app.services.homepage_assets import homepage_root, reset_active_homepage
+
+        reset_active_homepage(homepage_root())
+        return
 
     release_uuid = uuid.UUID(DEFAULT_HOMEPAGE_RELEASE_ID)
     runtime_result = await db.execute(select(Setting.value).where(Setting.key == "homepage_runtime"))

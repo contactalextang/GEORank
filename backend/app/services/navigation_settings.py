@@ -19,13 +19,6 @@ DEFAULT_NAVIGATION_MENU = {
         {"id": "tools", "label": "工具", "url": "/tools", "target": "_blank", "enabled": True},
         {"id": "experts", "label": "专家", "url": "/experts", "target": "_blank", "enabled": True},
         {"id": "tutorial", "label": "教程", "url": "/tutorial", "target": "_blank", "enabled": True},
-        {
-            "id": "github",
-            "label": "GitHub",
-            "url": "https://github.com/yaojingang/GEORank",
-            "target": "_blank",
-            "enabled": True,
-        },
     ]
 }
 

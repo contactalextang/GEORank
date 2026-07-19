@@ -568,9 +568,7 @@
     }
 
     async function sendMessage(overrideText) {
-        if (Auth && !Auth.requireAuth({ reasonKey: 'auth.reasonSolutions' })) {
-            return;
-        }
+        // 免登录测试：问答无需登录即可提问（登录仅用于保存会话）。
         if (state.sending) return;
         const text = String(overrideText || elements.chatInput?.value || '').trim();
         if (!text) return;
@@ -1622,7 +1620,7 @@
             </head>
             <body>
                 <header style="margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;">
-                    <p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #2563eb;">GEOrank AI Q&A Workspace</p>
+                    <p style="margin: 0 0 8px; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: #2563eb;">GEO工作台 AI Q&A Workspace</p>
                     <h1 style="margin: 0 0 12px; font-size: 32px;">${escapeHtml(state.conversationTitle || 'GEO问答')}</h1>
                     <p style="margin: 0; font-size: 14px; line-height: 1.7; color: #64748b;">
                         ${escapeHtml(state.contextReport?.url || state.sourceUrl || '基于当前对话上下文导出的 GEO 问答摘要')}

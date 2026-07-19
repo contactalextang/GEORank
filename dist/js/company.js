@@ -1,12 +1,12 @@
 /**
  * Company Detail Page - 动态公司详情
  */
-(window.GEOrank?.PageLifecycle?.run?.bind(window.GEOrank.PageLifecycle)
+(window.GEO工作台?.PageLifecycle?.run?.bind(window.GEO工作台.PageLifecycle)
     || ((callback) => callback()))(() => {
     'use strict';
 
     const API_BASE = '';
-    const Routes = window.GEOrank?.Routes;
+    const Routes = window.GEO工作台?.Routes;
 
     const elements = {
         heroLeft: document.getElementById('company-hero-left'),
@@ -392,8 +392,8 @@
                 window.history.replaceState({ companyId: company.id }, '', Routes.buildCompanyDetail(company.path_key || company.id));
             }
 
-            const detailTitle = `${company.name} - GEOrank`;
-            document.title = window.GEOrank?.SiteSettings?.replaceBrand?.(detailTitle) || detailTitle;
+            const detailTitle = `${company.name} - GEO工作台`;
+            document.title = window.GEO工作台?.SiteSettings?.replaceBrand?.(detailTitle) || detailTitle;
             const meta = document.querySelector('meta[name="description"]');
             if (meta) {
                 meta.setAttribute('content', company.short_description || company.description || '查看 GEO 公司详情');

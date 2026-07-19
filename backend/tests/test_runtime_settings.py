@@ -178,10 +178,11 @@ class RuntimeSettingsTests(unittest.TestCase):
         self.assertTrue(modules["tools"]["enabled"])
         self.assertNotIn("unknown", modules)
 
-    def test_build_homepage_runtime_config_defaults_to_builtin_homepage(self):
+    def test_build_homepage_runtime_config_defaults_to_company_homepage(self):
         config = _build_homepage_runtime_config({})
 
-        self.assertEqual(config["mode"], "custom")
+        self.assertEqual(config["mode"], "default")
+        self.assertIsNone(config["active_release_id"])
         self.assertEqual(config["active_release_id"], DEFAULT_HOMEPAGE_RELEASE_ID)
         self.assertEqual(config["company_list_path"], "/companies")
 

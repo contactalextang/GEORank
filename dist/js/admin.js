@@ -21,7 +21,6 @@
         { id: 'tools', label: '工具', url: '/tools', target: '_blank', enabled: true },
         { id: 'experts', label: '专家', url: '/experts', target: '_blank', enabled: true },
         { id: 'tutorial', label: '教程', url: '/tutorial', target: '_blank', enabled: true },
-        { id: 'github', label: 'GitHub', url: 'https://github.com/yaojingang/GEORank', target: '_blank', enabled: true },
     ];
     const ADMIN_PAGE_TITLES = Object.freeze({
         dashboard: '仪表盘',
@@ -396,7 +395,7 @@
                 <span class="material-symbols-outlined text-white" style="font-size:22px">hub</span>
             </div>
             <div>
-                <span class="text-xl font-extrabold text-white font-headline tracking-tight">GEOrank</span>
+                <span class="text-xl font-extrabold text-white font-headline tracking-tight">GEO工作台</span>
                 <span class="text-[10px] font-bold tracking-widest uppercase text-blue-400 block -mt-0.5">Admin Console</span>
             </div>
         </div>
@@ -424,7 +423,7 @@
             </div>
             <span class="text-slate-300 text-sm">AI 驱动的内容优化引擎</span>
         </div>
-        <p class="text-slate-600 text-xs pt-4">© 2026 GEOrank Platform · 仅限授权管理员</p>
+        <p class="text-slate-600 text-xs pt-4">© 2026 GEO工作台 · 仅限授权管理员</p>
     </div>
 </div>
 
@@ -436,11 +435,11 @@
             <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
                 <span class="material-symbols-outlined text-white text-xl">hub</span>
             </div>
-            <span class="text-lg font-extrabold font-headline tracking-tight">GEOrank Admin</span>
+            <span class="text-lg font-extrabold font-headline tracking-tight">GEO工作台 Admin</span>
         </div>
 
         <h1 class="text-[1.75rem] font-extrabold font-headline tracking-tight text-on-surface mb-1">欢迎回来</h1>
-        <p class="text-sm text-slate-500 mb-8">登录 GEOrank 后台管理系统</p>
+        <p class="text-sm text-slate-500 mb-8">登录 GEO工作台 后台管理系统</p>
 
         ${errMsg ? `
         <div class="mb-6 p-4 rounded-xl border flex items-start gap-3" style="background:#fef2f2;border-color:#fecaca">
@@ -524,7 +523,7 @@
             <span class="material-symbols-outlined text-white text-sm">hub</span>
         </div>
         <div>
-            <span class="text-sm font-bold font-headline tracking-tight">GEOrank</span>
+            <span class="text-sm font-bold font-headline tracking-tight">GEO工作台</span>
             <span class="text-[10px] text-slate-400 block -mt-0.5 font-semibold tracking-widest uppercase">Admin</span>
         </div>
     </div>
@@ -607,7 +606,7 @@
         ${title ? `<span class="text-sm font-semibold text-on-surface-variant hidden md:block">${title}</span>` : ''}
     </div>
     <div class="flex items-center gap-2">
-        <span class="text-xs text-slate-400 hidden sm:block">GEOrank Admin v1.3</span>
+        <span class="text-xs text-slate-400 hidden sm:block">GEO工作台 Admin v1.3</span>
     </div>
 </header>`;
 
@@ -2847,7 +2846,7 @@ ${pages.map(p => p === '…'
                 document.getElementById('editor-type').value = c.content_type || 'tutorial';
                 document.getElementById('editor-tags').value = (c.tags || []).join(', ');
                 easyMDE.value(c.markdown_body || '');
-                document.title = `编辑: ${c.title} - Admin | GEOrank`;
+                document.title = `编辑: ${c.title} - Admin | GEO工作台`;
             } catch (err) {
                 toast('加载文章失败: ' + err.message, 'error');
             }

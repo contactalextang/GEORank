@@ -11,9 +11,8 @@ async function read(relativePath) {
 }
 
 test('Next public pages expose locale switching while the legacy static shell stays Chinese-first', async () => {
-  const [siteHeader, activeHomepage, legacyHeader, legacyRuntime, legacyStyles, adminSidebar, routing] = await Promise.all([
+  const [siteHeader, legacyHeader, legacyRuntime, legacyStyles, adminSidebar, routing] = await Promise.all([
     read('packages/ui/src/layout/site-header.tsx'),
-    read('runtime/homepages/public/releases/9fe4a087-42bc-423a-bc59-fc020018a6f9/index.html'),
     read('dist/components/header.html'),
     read('dist/js/common.js'),
     read('dist/css/common.css'),
@@ -22,8 +21,6 @@ test('Next public pages expose locale switching while the legacy static shell st
   ]);
 
   assert.match(siteHeader, /<LanguageSwitcher locale=\{locale\} variant="site" \/>/);
-  assert.doesNotMatch(activeHomepage, /georank-language-switch|账号与语言|>EN<|>中</);
-  assert.match(activeHomepage, /class="georank-header-actions" aria-label="账号"/);
   assert.doesNotMatch(legacyHeader, /data-language-switcher|data-lang-option|header-language/);
   assert.doesNotMatch(legacyRuntime, /data-language-switcher|data-lang-option|header-language/);
   assert.doesNotMatch(legacyStyles, /\.header-language/);
