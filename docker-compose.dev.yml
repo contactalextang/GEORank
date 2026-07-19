@@ -8,13 +8,13 @@ services:
   api:
     ports:
       - "127.0.0.1:${GEORANK_API_PORT:-8000}:8000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
 
-  worker:
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-
-  beat:
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+  # 本地 Embedding：容器化 Ollama，仅在内部网 georank-net 上，不对外暴露任何端口。
+  # 只读复用宿主已拉取的模型（如 bge-m3），平台用 http://ollama:11434 访问。
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - /usr/share/ollama/.ollama/models:/root/.ollama/models:ro
+    networks:
+      - georank-net
