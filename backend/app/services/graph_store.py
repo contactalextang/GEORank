@@ -18,24 +18,39 @@ _ALLOWED_RELATIONSHIP_TYPES = frozenset(
 )
 
 
-def _validate_graph_payload(entities: list[dict], relations: list[dict]) -> None:
+def _sanitize_graph_payload(
+    entities: list[dict], relations: list[dict]
+) -> tuple[list[dict], list[dict]]:
+    """过滤出可安全写入的实体/关系。
+
+    实体类型/关系类型会直接拼进 Cypher 标签，必须严格白名单以防标签注入。
+    不在白名单或缺字段的条目「跳过」而非抛错，这样 LLM 偶发的异常单条
+    数据不会中断整次公司分析（安全性不减弱：越界条目永不进入 Cypher）。
+    """
+    clean_entities: list[dict] = []
     entity_names: set[str] = set()
-    for entity in entities:
+    for entity in entities or []:
         entity_type = entity.get("type")
+        entity_name = str(entity.get("name") or "").strip()
         if entity_type not in _ALLOWED_ENTITY_LABELS:
-            raise ValueError(f"不支持的实体类型：{entity_type}")
-        if not str(entity.get("name") or "").strip():
-            raise ValueError("图谱实体名称不能为空")
-        entity_name = str(entity["name"]).strip()
-        if entity_name in entity_names:
-            raise ValueError(f"图谱实体名称重复：{entity_name}")
+            continue
+        if not entity_name or entity_name in entity_names:
+            continue
         entity_names.add(entity_name)
-    for relation in relations:
+        clean_entities.append({**entity, "name": entity_name})
+
+    clean_relations: list[dict] = []
+    for relation in relations or []:
         relation_type = relation.get("type")
+        from_name = str(relation.get("from") or "").strip()
+        to_name = str(relation.get("to") or "").strip()
         if relation_type not in _ALLOWED_RELATIONSHIP_TYPES:
-            raise ValueError(f"不支持的关系类型：{relation_type}")
-        if not str(relation.get("from") or "").strip() or not str(relation.get("to") or "").strip():
-            raise ValueError("图谱关系端点不能为空")
+            continue
+        if not from_name or not to_name:
+            continue
+        clean_relations.append({**relation, "from": from_name, "to": to_name})
+
+    return clean_entities, clean_relations
 
 
 async def create_company_node(company_id: str, properties: dict):
@@ -61,7 +76,9 @@ async def add_entities_and_relations(company_id: str, entities: list[dict], rela
     entities: [{"name": "...", "type": "Product|Person|Technology", "props": {...}}]
     relations: [{"from": "...", "to": "...", "type": "HAS_PRODUCT|FOUNDED_BY|USES_TECH"}]
     """
-    _validate_graph_payload(entities, relations)
+    entities, relations = _sanitize_graph_payload(entities, relations)
+    if not entities and not relations:
+        return
 
     async with _new_driver() as driver:
         async with driver.session() as session:

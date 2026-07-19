@@ -8,3 +8,13 @@ services:
   api:
     ports:
       - "127.0.0.1:${GEORANK_API_PORT:-8000}:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  worker:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  beat:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
