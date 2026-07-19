@@ -121,7 +121,7 @@ DEFAULT_AI_USAGE_POLICY = {
     "global_budget_enabled": True,
     "emergency_byok_only": False,
     "quota_reset_timezone": "Asia/Shanghai",
-    "allow_anonymous_ai_usage": False,
+    "allow_anonymous_ai_usage": True,
     "allow_user_byok": True,
     "byok_transport_mode": "proxy_transient",
     "byok_guidance": {

@@ -22,7 +22,7 @@ class AiQuotaPolicyRulesTests(unittest.TestCase):
         self.assertEqual(policy["lifetime_token_grant"], 10_000)
         self.assertEqual(policy["global_daily_token_limit"], 1_000_000)
         self.assertTrue(policy["global_budget_enabled"])
-        self.assertFalse(policy["allow_anonymous_ai_usage"])
+        self.assertTrue(policy["allow_anonymous_ai_usage"])
         self.assertEqual(policy["byok_guidance"]["provider"], "deepseek")
         self.assertEqual(policy["byok_guidance"]["base_url"], "https://api.deepseek.com")
         self.assertEqual(policy["byok_guidance"]["model"], "deepseek-v4-flash")

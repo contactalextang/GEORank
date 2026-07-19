@@ -437,11 +437,7 @@
         currentNormalizedUrl = incomingUrl;
 
         if (incomingCompanyId) {
-            if (!getAuthToken()) {
-                analysisUrl.textContent = incomingUrl || '正在恢复分析记录...';
-                showLoginRequired();
-                return;
-            }
+            // 免登录：无需账号即可恢复/发起分析。
             if (analysisUrl) {
                 analysisUrl.textContent = incomingUrl || '正在恢复分析记录...';
             }
@@ -473,12 +469,7 @@
             return;
         }
 
-        if (!getAuthToken()) {
-            analysisUrl.textContent = incomingUrl;
-            currentNormalizedUrl = incomingUrl;
-            showLoginRequired();
-            return;
-        }
+        // 免登录：直接以匿名身份发起分析（后端允许匿名 AI 用量）。
 
         analysisUrl.textContent = incomingUrl;
         updateBadge('创建任务', 'active');

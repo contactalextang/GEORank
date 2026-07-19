@@ -37,6 +37,9 @@ _PENDING_RECOVERY_AFTER = timedelta(minutes=5)
 def _can_view_company_draft(company: Company, current_user) -> bool:
     if company.publish_status == PublishStatus.PUBLISHED:
         return True
+    # 匿名（免登录）创建的草稿没有归属人，任何人可查看自己发起的分析。
+    if company.submitted_by is None:
+        return True
     if current_user is None:
         return False
     return bool(
@@ -58,11 +61,13 @@ def _company_pipeline_needs_restart(company: Company) -> bool:
     return last_progress_at <= datetime.utcnow() - _PENDING_RECOVERY_AFTER
 
 @router.post("/submit", response_model=SubmitCompanyResponse, status_code=status.HTTP_202_ACCEPTED)
-async def submit_company(data: SubmitCompanyRequest, request: Request, db: DbSession, current_user: CurrentUser):
+async def submit_company(data: SubmitCompanyRequest, request: Request, db: DbSession, current_user: OptionalUser):
     """
     用户提交公司 URL → 创建记录 → 触发 AI 入库流水线
     返回 company_id，前端可轮询 pipeline-status
+    免登录：current_user 可为空，匿名分析的记录 submitted_by 置空。
     """
+    user_id = current_user.id if current_user else None
     try:
         normalized_url = normalize_company_url(data.url)
     except ValueError as exc:
@@ -82,6 +87,7 @@ async def submit_company(data: SubmitCompanyRequest, request: Request, db: DbSes
 
         if (
             existing.submitted_by
+            and current_user
             and existing.submitted_by != current_user.id
             and current_user.role != UserRole.ADMIN
         ):
@@ -125,7 +131,7 @@ async def submit_company(data: SubmitCompanyRequest, request: Request, db: DbSes
                         pipeline_error=None,
                         crawl_candidates=[],
                         crawl_pages=[],
-                        submitted_by=current_user.id,
+                        submitted_by=user_id if user_id is not None else existing.submitted_by,
                         ai_reservation_id=access.reservation_id,
                     )
                     .returning(Company.id)
@@ -201,8 +207,8 @@ async def submit_company(data: SubmitCompanyRequest, request: Request, db: DbSes
                 resumed=True,
             )
 
-        if not existing.submitted_by:
-            existing.submitted_by = current_user.id
+        if not existing.submitted_by and user_id is not None:
+            existing.submitted_by = user_id
             await db.commit()
 
         return SubmitCompanyResponse(
@@ -227,7 +233,7 @@ async def submit_company(data: SubmitCompanyRequest, request: Request, db: DbSes
         url=normalized_url,
         pipeline_status=PipelineStatus.PENDING,
         publish_status=PublishStatus.DRAFT,
-        submitted_by=current_user.id,
+        submitted_by=user_id,
         ai_reservation_id=access.reservation_id,
     )
     db.add(company)

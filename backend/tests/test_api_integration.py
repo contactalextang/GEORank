@@ -1817,7 +1817,7 @@ class ApiIntegrationTests(unittest.TestCase):
         self.assertEqual(company.pipeline_status, PipelineStatus.FAILED)
         self.assertEqual(company.pipeline_error, "官网分析任务创建失败，请稍后重试。")
 
-    def test_submit_company_requires_login_for_platform_quota(self):
+    def test_submit_company_allows_anonymous_analysis(self):
         bare_domain = f"codex-it-{uuid.uuid4().hex[:10]}.public.test"
         company_url = f"https://{bare_domain}"
 
@@ -1829,15 +1829,20 @@ class ApiIntegrationTests(unittest.TestCase):
                 )
             )
 
-        self.assertEqual(submit_response.status_code, 401, submit_response.text)
-        send_task.assert_not_called()
+        # 免登录：匿名即可发起分析，记录 submitted_by 置空。
+        self.assertEqual(submit_response.status_code, 202, submit_response.text)
+        send_task.assert_called_once()
 
-        async def _company_exists():
+        async def _company_owner():
             async with async_session() as db:
-                result = await db.execute(select(Company.id).where(Company.url == company_url))
-                return result.scalar_one_or_none() is not None
+                result = await db.execute(
+                    select(Company.submitted_by).where(Company.url == company_url)
+                )
+                return result.one_or_none()
 
-        self.assertFalse(self.run_async(_company_exists()))
+        owner = self.run_async(_company_owner())
+        self.assertIsNotNone(owner)
+        self.assertIsNone(owner[0])
 
     def test_submit_company_review_requires_completed_pipeline_and_updates_publish_status(self):
         user = self.run_async(self._register_user())
